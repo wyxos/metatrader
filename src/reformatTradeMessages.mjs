@@ -1,8 +1,10 @@
+import {logError} from "./errorLogger.mjs";
+
 export default function reformatTradeMessages(message) {
     const lines = message.split('\n');
     let actionLine = lines.find(line => /(BUY NOW|BUY|SELL NOW|SELL)/.test(line));
     if (!actionLine) {
-        console.log('No recognizable action found in the message.');
+        logError('No recognizable action found in the message.')
         return [];
     }
     const symbolMatch = actionLine.match(/(\w{3}\w{3})/);
@@ -10,7 +12,7 @@ export default function reformatTradeMessages(message) {
 
     // Check if the matches are not null before accessing
     if (!symbolMatch || !actionMatch) {
-        console.log('No symbol or action could be matched in the action line.');
+        logError('No symbol or action could be matched in the action line.')
         return [];
     }
 

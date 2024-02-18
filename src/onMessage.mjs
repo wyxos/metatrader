@@ -3,6 +3,7 @@ import {parseTradeMessage} from "./parseTradeMessage.mjs";
 import {getCurrentMarketPrice} from "./getCurrentMarketPrice.mjs";
 import {isWithinRange} from "./isWithinRange.mjs";
 import {sendTradeCommand} from "./sendTradeCommand.mjs";
+import {logError} from "./errorLogger.mjs";
 
 export async function onMessage(msg) {
     console.log('Incoming message', msg.text);
