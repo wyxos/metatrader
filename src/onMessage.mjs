@@ -5,7 +5,7 @@ import {isWithinRange} from "./isWithinRange.mjs";
 import {sendTradeCommand} from "./sendTradeCommand.mjs";
 
 export async function onMessage(msg) {
-    console.log('Incoming message', msg);
+    console.log('Incoming message', msg.text);
     if (msg.text) {
         // Generate an array of reformatted trade messages
         const tradeActions = reformatTradeMessages(msg.text);
@@ -15,7 +15,7 @@ export async function onMessage(msg) {
             const tradeParams = parseTradeMessage(action); // Parse each reformatted message
             if (tradeParams) {
                 const currentPrice = await getCurrentMarketPrice(tradeParams.symbol, tradeParams.actionType);
-                console.log(`Evaluating if ${tradeParams.entry} is within range of ${currentPrice}`);
+                console.log(`Evaluating if ${tradeParams.entry} is within range of ${tradeParams.entry} && ${currentPrice}`);
                 if (isWithinRange(tradeParams.entry || currentPrice, currentPrice)) {
                     try {
                         const data = await sendTradeCommand(tradeParams);

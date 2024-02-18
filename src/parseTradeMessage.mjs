@@ -12,7 +12,8 @@ export function parseTradeMessage(message) {
         let entry = match[3] ? parseFloat(match[3]) : 0; // Default to 0 if no entry value is provided
         let takeProfit = parseFloat(match[4]);
         let stopLoss = parseFloat(match[5]);
-        let volume = match[6] || 0;
+        // let volume = match[6] || 0.01;
+        let volume = 0.01;
 
         let parsed = {
             actionType: actionType,

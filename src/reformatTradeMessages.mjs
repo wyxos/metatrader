@@ -5,8 +5,18 @@ export default function reformatTradeMessages(message) {
         console.log('No recognizable action found in the message.');
         return [];
     }
-    let symbol = actionLine.match(/(\w{3}\w{3})/)[0];
-    let action = actionLine.match(/(BUY NOW|BUY|SELL NOW|SELL)/)[0];
+    const symbolMatch = actionLine.match(/(\w{3}\w{3})/);
+    const actionMatch = actionLine.match(/(BUY NOW|BUY|SELL NOW|SELL)/);
+
+    // Check if the matches are not null before accessing
+    if (!symbolMatch || !actionMatch) {
+        console.log('No symbol or action could be matched in the action line.');
+        return [];
+    }
+
+    let symbol = symbolMatch[0];
+    let action = actionMatch[0];
+
 
     const instructions = [];
     let tps = []; // Temporarily store TP values until an SL is encountered
