@@ -1,5 +1,3 @@
-import {logError} from "./errorLogger.mjs";
-
 const currencies = {
     'AUDCAD' : 'AUDCAD',
     'AUDCHF' : 'AUDCHF',
