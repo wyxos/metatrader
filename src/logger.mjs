@@ -7,7 +7,8 @@ import * as fs from "fs"; // For daily log rotation
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const logDirectory = path.resolve(__dirname, './../wyxos/metatrader-logs');
+// Correctly construct the absolute path for the log directory
+const logDirectory = path.resolve(__dirname, '../wyxos/metatrader-logs');
 
 // Ensure the log directory exists
 if (!fs.existsSync(logDirectory)) {
@@ -16,14 +17,15 @@ if (!fs.existsSync(logDirectory)) {
 
 // Configure winston to log to a file with daily rotation
 const logger = winston.createLogger({
-    level: 'info', // or whatever level you need
+    level: 'info',
     format: winston.format.combine(
         winston.format.timestamp(),
         winston.format.printf(info => `${info.timestamp} - ${info.level.toUpperCase()}: ${info.message}`)
     ),
     transports: [
         new winston.transports.DailyRotateFile({
-            filename: './../wyxos/metatrader-logs/%DATE%-message.log',
+            // Use the absolute path for the filename
+            filename: path.join(logDirectory, '%DATE%-message.log'),
             datePattern: 'YYYY-MM-DD',
             maxSize: '20m',
             maxFiles: '14d'
