@@ -1,5 +1,4 @@
 import reformatTradeMessages, {cleanMessage} from "./reformatTradeMessages.mjs";
-import {parseTradeMessage} from "./parseTradeMessage.mjs";
 import {getCurrentMarketPrice} from "./getCurrentMarketPrice.mjs";
 import {isWithinRange} from "./isWithinRange.mjs";
 import {sendTradeCommand} from "./sendTradeCommand.mjs";
