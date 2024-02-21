@@ -5,7 +5,7 @@ import {sendTradeCommand} from "./sendTradeCommand.mjs";
 import logger from "./logger.mjs";
 
 export async function onMessage(msg) {
-    logger.info(`received ${cleanMessage(msg.txt)})`)
+    logger.info(`received ${cleanMessage(msg.text)})`)
 
     if (msg.text) {
         // Generate an array of reformatted trade messages
