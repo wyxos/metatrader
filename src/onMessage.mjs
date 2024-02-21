@@ -17,33 +17,31 @@ export async function onMessage(msg) {
 
         // Process each trade message individually
         for (const action of tradeActions) {
-            if (tradeActions) {
-                const currentPrice = await getCurrentMarketPrice(tradeActions.symbol, tradeActions.actionType);
+            const currentPrice = await getCurrentMarketPrice(tradeActions.symbol, tradeActions.actionType);
 
-                if(Array.isArray(tradeActions.entry)){
-                    if(isWithinRange(tradeActions.entry, currentPrice)){
-                        try {
-                            const data = await sendTradeCommand(tradeActions);
-                            logger.info(`Trade command sent successfully. ${data}`)
-                        } catch (error) {
-                            logger.error(`Error sending trade command: ${error}`)
-                        }
-                    } else {
-                        let error = `${new Date().getTime()} - Entry value is not within the specified range. Trade not executed.`;
-                        logger.error(error);
-                    }
-                }
-                else{
-                    if(!tradeActions.entry){
-                        tradeActions.entry = currentPrice
-                    }
-
+            if(Array.isArray(tradeActions.entry)){
+                if(isWithinRange(tradeActions.entry, currentPrice)){
                     try {
                         const data = await sendTradeCommand(tradeActions);
                         logger.info(`Trade command sent successfully. ${data}`)
                     } catch (error) {
                         logger.error(`Error sending trade command: ${error}`)
                     }
+                } else {
+                    let error = `${new Date().getTime()} - Entry value is not within the specified range. Trade not executed.`;
+                    logger.error(error);
+                }
+            }
+            else{
+                if(!tradeActions.entry){
+                    tradeActions.entry = currentPrice
+                }
+
+                try {
+                    const data = await sendTradeCommand(tradeActions);
+                    logger.info(`Trade command sent successfully. ${data}`)
+                } catch (error) {
+                    logger.error(`Error sending trade command: ${error}`)
                 }
             }
         }
