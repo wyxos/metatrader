@@ -74,6 +74,8 @@ export function cleanMessage(message) {
     // Replace multiple spaces with a single space.
     cleanedMessage = cleanedMessage.replace(/\s+/g, ' ');
 
+    logger.info('Cleaned: ' + cleanedMessage)
+
     return cleanedMessage;
 }
 
@@ -157,7 +159,7 @@ export function extractTradeValue(message) {
     // Clean up any remaining identifiers and whitespace to isolate the trade value/range
     cleanedMessage = cleanedMessage.replace(/[^\d\.\/\s-]/g, '').trim();
 
-    logger.info('cleaned: ' + cleanedMessage)
+    logger.info('Detecting action value/range: ' + cleanedMessage)
 
     // Assuming the trade values or range are now leading the cleaned message,
     // split by space, slash, or dash to account for different range formats

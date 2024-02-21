@@ -75,6 +75,26 @@ describe('reformatTradeMessages', () => {
         expect(currency).toEqual('XAUUSD')
     });
 
+    it('should extract currency', () => {
+        const message = '#𝐆𝐎𝐋𝐃 SELL 2030\n' +
+            '\n' +
+            'TP. 2026\n' +
+            'TP. 2022\n' +
+            'TP. 2018\n' +
+            'TP. 2014\n' +
+            'TP. 2010\n' +
+            '\n' +
+            '❌SL. 2055'
+
+        let cleanedMessage = cleanMessage(message);
+
+        console.log(cleanedMessage)
+
+        const currency = extractCurrency(cleanedMessage)
+
+        expect(currency).toEqual('XAUUSD')
+    });
+
     it('should extract trading command', () => {
         let message = 'XAUUSD SELL 2030.60 2033.00 TP 2028.00 TP 2025.00 TP 2020.00 SL 2035.00'
 
