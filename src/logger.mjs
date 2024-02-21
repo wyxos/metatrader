@@ -10,7 +10,7 @@ const logger = winston.createLogger({
     ),
     transports: [
         new winston.transports.DailyRotateFile({
-            filename: 'logs/%DATE%-message.log',
+            filename: '../wyxos/metatrader-logs/%DATE%-message.log',
             datePattern: 'YYYY-MM-DD',
             maxSize: '20m',
             maxFiles: '14d'
