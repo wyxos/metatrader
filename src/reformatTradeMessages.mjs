@@ -63,12 +63,20 @@ export function cleanMessage(message) {
         line = line.replace('STOP LOSS', 'SL');
         // Remove numbers after 'TP' to standardize it.
         line = line.replace(/TP\d*\s/g, 'TP ');
+        // Remove colons
+        line = line.replace(/:/g, '');
         return line;
     });
 
     // Join the processed lines back together with spaces.
-    return processedLines.join(' ').trim();
+    let cleanedMessage = processedLines.join(' ').trim();
+
+    // Replace multiple spaces with a single space.
+    cleanedMessage = cleanedMessage.replace(/\s+/g, ' ');
+
+    return cleanedMessage;
 }
+
 
 export function extractProfit(message) {
     const tpPattern = /TP (\d+\.?\d*)/g; // Matches "TP" followed by a space and then a number
@@ -149,7 +157,7 @@ export function extractTradeValue(message) {
     // Clean up any remaining identifiers and whitespace to isolate the trade value/range
     cleanedMessage = cleanedMessage.replace(/[^\d\.\/\s-]/g, '').trim();
 
-    logger.info('cleaned', cleanedMessage)
+    logger.info('cleaned: ' + cleanedMessage)
 
     // Assuming the trade values or range are now leading the cleaned message,
     // split by space, slash, or dash to account for different range formats

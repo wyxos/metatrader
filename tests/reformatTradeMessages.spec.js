@@ -38,6 +38,19 @@ describe('reformatTradeMessages', () => {
         expect(formatted).toEqual('XAUUSD SELL 2030.60 2033.00 TP 2028.00 TP 2025.00 TP 2020.00 SL 2035.00')
     })
 
+    it('should clean message with STOP LOSS', () => {
+        const message = "GOLD SELL 2028-2031\n" +
+            "\n" +
+            "TP  2020.00\n" +
+            "TP  2015.00\n" +
+            "\n" +
+            "SL  2035.00"
+
+        const formatted = cleanMessage(message)
+
+        expect(formatted).toEqual('GOLD SELL 2028-2031 TP 2020.00 TP 2015.00 SL 2035.00')
+    })
+
     it('should extract take profit', () => {
         const message = 'XAUUSD SELL 2030.60 2033.00 TP 2028.00 TP 2025.00 TP 2020.00 SL 2035.00'
 
