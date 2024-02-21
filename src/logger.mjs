@@ -1,7 +1,11 @@
 import winston from 'winston';
 import 'winston-daily-rotate-file';
-import * as path from "path";
+import path from 'path';
+import url from 'url';
 import * as fs from "fs"; // For daily log rotation
+
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const logDirectory = path.resolve(__dirname, './../wyxos/metatrader-logs');
 
