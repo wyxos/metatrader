@@ -8,7 +8,7 @@ const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Correctly construct the absolute path for the log directory
-const logDirectory = path.resolve(__dirname, '../wyxos/metatrader-logs');
+const logDirectory = path.resolve(__dirname, '../../wyxos/metatrader-logs');
 
 // Ensure the log directory exists
 if (!fs.existsSync(logDirectory)) {
