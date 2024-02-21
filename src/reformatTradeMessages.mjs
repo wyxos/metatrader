@@ -1,3 +1,5 @@
+import logger from "./logger.mjs";
+
 const currencies = {
     'AUDCAD' : 'AUDCAD',
     'AUDCHF' : 'AUDCHF',
@@ -44,7 +46,11 @@ export function extractCurrency(message) {
         }
     }
 
-    throw new Error('No currency found.');
+    let error = new Error('No currency found.');
+
+    logger.error(error)
+
+    throw error;
 }
 
 export function cleanMessage(message) {
@@ -118,8 +124,6 @@ export function extractTradeValue(message) {
     const profits = extractProfit(message); // Assuming this returns an array of TP values
     const loss = extractLoss(message);
 
-    console.log(currency, command, profits, loss)
-
     // Remove the extracted parts from the message
     let cleanedMessage = message.replace(currency, '')
         .replace(new RegExp(`SL ${loss}`, 'gi'), '');
@@ -141,7 +145,7 @@ export function extractTradeValue(message) {
     // Clean up any remaining identifiers and whitespace to isolate the trade value/range
     cleanedMessage = cleanedMessage.replace(/[^\d\.\/\s-]/g, '').trim();
 
-    console.log('cleaned', cleanedMessage)
+    logger.info('cleaned', cleanedMessage)
 
     // Assuming the trade values or range are now leading the cleaned message,
     // split by space, slash, or dash to account for different range formats
@@ -156,7 +160,9 @@ export function extractTradeValue(message) {
         return potentialRange[0];
     }
 
-    throw new Error("No trade value or range found");
+    let error = new Error("No trade value or range found");
+    logger.error(error)
+    throw error;
 }
 
 export function extractActions(message){

@@ -1,4 +1,5 @@
 import axios from "axios";
+import logger from "./logger.mjs";
 
 export async function getCurrentMarketPrice(symbol, actionType) {
     const metaApiToken = process.env.META_API_TOKEN;
@@ -18,7 +19,7 @@ export async function getCurrentMarketPrice(symbol, actionType) {
         const marketPrice = actionType === 'ORDER_TYPE_BUY' ? response.data.ask : response.data.bid;
         return marketPrice;
     } catch (error) {
-        console.error('Error fetching current market price:', error);
+        logger.error('Error fetching current market price:', error);
         return null; // or handle the error appropriately
     }
 }
