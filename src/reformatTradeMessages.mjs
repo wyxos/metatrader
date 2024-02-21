@@ -92,7 +92,11 @@ export function extractLoss(message) {
         return parseFloat(match[1]);
     }
 
-    throw new Error('No stop loss found');
+    let error = new Error('No stop loss found');
+
+    logger.error(error)
+
+    throw error;
 }
 
 export function extractCommand(message) {
