@@ -9,6 +9,79 @@ import {
 
 describe('reformatTradeMessages', () => {
     it('should clean message', () => {
+        const message = '#𝐆𝐎𝐋𝐃 SELL 2030 ' +
+            'TP. 2026 ' +
+            'TP. 2022 \n' +
+            'TP. 2018 \n' +
+            'TP. 2014 \n' +
+            'TP. 2010 \n' +
+            '❌SL. 2055'
+
+        const formatted = cleanMessage(message)
+
+        expect(formatted).toEqual('GOLD SELL 2030 TP 2026 TP 2022 TP 2018 TP 2014 TP 2010 SL 2055')
+    })
+
+
+    it('should clean message', () => {
+        const message = '#𝐆𝐎𝐋𝐃 SELL 2030 ' +
+            'TAKE PROFIT : 2026 ' +
+            'TAKE PROFIT : 2022 \n' +
+            'TAKE PROFIT : 2018 \n' +
+            'TAKE PROFIT : 2014 \n' +
+            'TAKE PROFIT : 2010 \n' +
+            '❌STOP LOSS : 2055'
+
+        const formatted = cleanMessage(message)
+
+        expect(formatted).toEqual('GOLD SELL 2030 TP 2026 TP 2022 TP 2018 TP 2014 TP 2010 SL 2055')
+    })
+
+    it('should clean message', () => {
+        const message = '#𝐆𝐎𝐋𝐃 SELL 2030 ' +
+            'TP1 2026 ' +
+            'TP2 2022 \n' +
+            'TP3 2018 \n' +
+            'TP4 2014 \n' +
+            'TP5 2010 \n' +
+            '❌SL. 2055'
+
+        const formatted = cleanMessage(message)
+
+        expect(formatted).toEqual('GOLD SELL 2030 TP 2026 TP 2022 TP 2018 TP 2014 TP 2010 SL 2055')
+    })
+
+
+    it('should clean message', () => {
+        const message = '#𝐆𝐎𝐋𝐃 SELL 2030 ' +
+            'TAKE PROFIT 1 : 2026 ' +
+            'TAKE PROFIT 2 : 2022 \n' +
+            'TAKE PROFIT 3 : 2018 \n' +
+            'TAKE PROFIT 4 : 2014 \n' +
+            'TAKE PROFIT 5 : 2010 \n' +
+            '❌STOP LOSS : 2055'
+
+        const formatted = cleanMessage(message)
+
+        expect(formatted).toEqual('GOLD SELL 2030 TP 2026 TP 2022 TP 2018 TP 2014 TP 2010 SL 2055')
+    })
+
+    it('should clean message', () => {
+        const message = 'XAUUSD SELL\n' +
+            '@ 2030.60\n' +
+            '\n' +
+            'TP₁ 2028.00\n' +
+            'TP₂ 2025.00\n' +
+            'TP₃ 2020.00\n' +
+            '\n' +
+            'STOP LOSS 2035.00'
+
+        const formatted = cleanMessage(message)
+
+        expect(formatted).toEqual('XAUUSD SELL 2030.60 TP 2028.00 TP 2025.00 TP 2020.00 SL 2035.00')
+    })
+
+    it('should clean message', () => {
         const message = 'XAUUSD SELL\n' +
             '2030.60 2033.00\n' +
             '\n' +
@@ -23,7 +96,15 @@ describe('reformatTradeMessages', () => {
         expect(formatted).toEqual('XAUUSD SELL 2030.60 2033.00 TP 2028.00 TP 2025.00 TP 2020.00 SL 2035.00')
     })
 
-    it('should clean message with STOP LOSS', () => {
+    it('should clean message', () => {
+        const message = '#𝐆𝐎𝐋𝐃 SELL 2030 TP. 2026 TP. 2022 TP. 2018 TP. 2014 TP. 2010 ❌SL. 2055'
+
+        const formatted = cleanMessage(message)
+
+        expect(formatted).toEqual('GOLD SELL 2030 TP 2026 TP 2022 TP 2018 TP 2014 TP 2010 SL 2055')
+    })
+
+    it('should clean message', () => {
         const message = 'XAUUSD SELL\n' +
             '2030.60 2033.00\n' +
             '\n' +
@@ -38,7 +119,38 @@ describe('reformatTradeMessages', () => {
         expect(formatted).toEqual('XAUUSD SELL 2030.60 2033.00 TP 2028.00 TP 2025.00 TP 2020.00 SL 2035.00')
     })
 
-    it('should clean message with STOP LOSS', () => {
+    it('should clean message', () => {
+        const message = 'XAUUSD SELL\n' +
+            '2030.60 2033.00\n' +
+            '\n' +
+            'TP₁ 2028.00\n' +
+            'TP₂ 2025.00\n' +
+            'TP₃ 2020.00\n' +
+            '\n' +
+            'STOP LOSS 2035.00'
+
+        const formatted = cleanMessage(message)
+
+        expect(formatted).toEqual('XAUUSD SELL 2030.60 2033.00 TP 2028.00 TP 2025.00 TP 2020.00 SL 2035.00')
+    })
+
+
+    it('should clean message', () => {
+        const message = 'XAUUSD SELL\n' +
+            '2030.60 2033.00\n' +
+            '\n' +
+            'TAKE PROFIT 2028.00\n' +
+            'TAKE PROFIT 2025.00\n' +
+            'TAKE PROFIT 2020.00\n' +
+            '\n' +
+            'STOP LOSS 2035.00'
+
+        const formatted = cleanMessage(message)
+
+        expect(formatted).toEqual('XAUUSD SELL 2030.60 2033.00 TP 2028.00 TP 2025.00 TP 2020.00 SL 2035.00')
+    })
+
+    it('should clean message', () => {
         const message = "GOLD SELL 2028-2031\n" +
             "\n" +
             "TP  2020.00\n" +

@@ -54,30 +54,43 @@ export function extractCurrency(message) {
 }
 
 export function cleanMessage(message) {
-    // Split the message by newline, filter out empty lines.
-    const lines = message.split('\n').filter(line => line.trim() !== '');
+    // Remove all new lines and replace them with spaces to prevent word concatenation
+    let cleanedMessage = message.replace(/\r?\n|\r/g, ' ');
 
-    // Process each line for consistency and formatting.
-    const processedLines = lines.map(line => {
-        // Replace 'STOP LOSS' with 'SL' for consistency.
-        line = line.replace('STOP LOSS', 'SL');
-        // Remove numbers after 'TP' to standardize it.
-        line = line.replace(/TP\d*\s/g, 'TP ');
-        // Remove colons
-        line = line.replace(/:/g, '');
-        return line;
-    });
+    // Convert the entire message to uppercase
+    cleanedMessage = cleanedMessage.toUpperCase();
 
-    // Join the processed lines back together with spaces.
-    let cleanedMessage = processedLines.join(' ').trim();
+    // Normalize the message to decompose certain stylized characters
+    cleanedMessage = cleanedMessage.normalize("NFKD");
 
-    // Replace multiple spaces with a single space.
+    // Optional: Remove non-ASCII characters if the normalization doesn't convert stylized text to ASCII
+    cleanedMessage = cleanedMessage.replace(/[^\x00-\x7F]/g, "");
+
+    // Remove all hash symbols
+    cleanedMessage = cleanedMessage.replace(/#/g, '');
+
+    // Remove all colons
+    cleanedMessage = cleanedMessage.replace(/:/g, '');
+
+    // Remove all dots that are not part of a decimal number
+    // This involves keeping dots that are between two digits
+    cleanedMessage = cleanedMessage.replace(/(\D)\.|\.\D/g, '$1');
+
+    // Replace "TAKE PROFIT" with "TP" and "STOP LOSS" with "SL"
+    cleanedMessage = cleanedMessage.replace(/TAKE PROFIT/g, 'TP').replace(/STOP LOSS/g, 'SL');
+
+    cleanedMessage = cleanedMessage.replace(/TP\s?\d\s/g, 'TP ');
+
+    cleanedMessage = cleanedMessage.replace(/@/g, '');
+
+    // Remove extra spaces (including those potentially introduced by removing symbols)
+    // This is done by replacing multiple spaces with a single space
     cleanedMessage = cleanedMessage.replace(/\s+/g, ' ');
 
-    logger.info('Cleaned: ' + cleanedMessage)
 
-    return cleanedMessage;
+    return cleanedMessage.trim();
 }
+
 
 
 export function extractProfit(message) {
