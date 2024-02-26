@@ -16,12 +16,12 @@ export async function onMessage(msg) {
 
         // Process each trade message individually
         for (const action of tradeActions) {
-            const currentPrice = await getCurrentMarketPrice(tradeActions.symbol, tradeActions.actionType);
+            const currentPrice = await getCurrentMarketPrice(action.symbol, action.actionType);
 
-            if(Array.isArray(tradeActions.entry)){
-                if(isWithinRange(tradeActions.entry, currentPrice)){
+            if(Array.isArray(action.entry)){
+                if(isWithinRange(action.entry, currentPrice)){
                     try {
-                        const data = await sendTradeCommand(tradeActions);
+                        const data = await sendTradeCommand(action);
                         logger.info(`Trade command sent successfully. ${data}`)
                     } catch (error) {
                         logger.error(`Error sending trade command: ${error}`)
@@ -32,12 +32,12 @@ export async function onMessage(msg) {
                 }
             }
             else{
-                if(!tradeActions.entry){
-                    tradeActions.entry = currentPrice
+                if(!action.entry){
+                    action.entry = currentPrice
                 }
 
                 try {
-                    const data = await sendTradeCommand(tradeActions);
+                    const data = await sendTradeCommand(action);
                     logger.info(`Trade command sent successfully. ${data}`)
                 } catch (error) {
                     logger.error(`Error sending trade command: ${error}`)

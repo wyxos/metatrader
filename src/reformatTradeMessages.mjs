@@ -146,13 +146,13 @@ export function extractCommand(message) {
 
 export function extractTradeValue(message) {
     // Use previously defined functions to extract and remove known parts of the message
-    const currency = extractCurrency(message);
+    const symbol = extractCurrency(message);
     const command = extractCommand(message);
     const profits = extractProfit(message); // Assuming this returns an array of TP values
     const loss = extractLoss(message);
 
     // Remove the extracted parts from the message
-    let cleanedMessage = message.replace(currency, '')
+    let cleanedMessage = message.replace(symbol, '')
         .replace(new RegExp(`SL ${loss}`, 'gi'), '');
 
     // Remove TP values
