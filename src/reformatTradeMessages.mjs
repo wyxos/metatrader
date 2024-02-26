@@ -1,41 +1,41 @@
 import logger from "./logger.mjs";
 
 const currencies = {
-    'AUDCAD' : 'AUDCAD',
-    'AUDCHF' : 'AUDCHF',
-    'AUDJPY' : 'AUDJPY',
-    'AUDNZD' : 'AUDNZD',
-    'AUDUSD' : 'AUDUSD',
-    'BTC.USD' : 'BTC.USD',
-    'BTCUSD' : 'BTCUSD',
-    'CHFEUR' : 'CHFEUR',
-    'Chfjpy' : 'Chfjpy',
-    'DXY' : 'DXY',
-    'EURAUD' : 'EURAUD',
-    'EURCAD' : 'EURCAD',
-    'EURCHF' : 'EURCHF',
-    'EURGBP' : 'EURGBP',
-    'EURJPY' : 'EURJPY',
-    'EURNZD' : 'EURNZD',
-    'EURUSD' : 'EURUSD',
-    'GBPAUD' : 'GBPAUD',
-    'GBPCAD' : 'GBPCAD',
-    'GBPJPY' : 'GBPJPY',
-    'GBPNZD' : 'GBPNZD',
-    'GBPUSD' : 'GBPUSD',
-    'GOLD' : 'XAUUSD',
-    'NASDAQ' : 'NASDAQ',
-    'NZDCAD' : 'NZDCAD',
-    'NZDCHF' : 'NZDCHF',
-    'NZDJPY' : 'NZDJPY',
-    'NZDUSD' : 'NZDUSD',
-    'US30' : 'NASDAQ',
-    'USDCAD' : 'USDCAD',
-    'USDCHF' : 'USDCHF',
-    'USDJPY' : 'USDJPY',
-    'XAGUSD' : 'XAGUSD',
-    'XAU.USD' : 'XAUUSD',
-    'XAUUSD' : 'XAUUSD'
+    'AUDCAD': 'AUDCAD',
+    'AUDCHF': 'AUDCHF',
+    'AUDJPY': 'AUDJPY',
+    'AUDNZD': 'AUDNZD',
+    'AUDUSD': 'AUDUSD',
+    'BTC.USD': 'BTC.USD',
+    'BTCUSD': 'BTCUSD',
+    'CHFEUR': 'CHFEUR',
+    'Chfjpy': 'Chfjpy',
+    'DXY': 'DXY',
+    'EURAUD': 'EURAUD',
+    'EURCAD': 'EURCAD',
+    'EURCHF': 'EURCHF',
+    'EURGBP': 'EURGBP',
+    'EURJPY': 'EURJPY',
+    'EURNZD': 'EURNZD',
+    'EURUSD': 'EURUSD',
+    'GBPAUD': 'GBPAUD',
+    'GBPCAD': 'GBPCAD',
+    'GBPJPY': 'GBPJPY',
+    'GBPNZD': 'GBPNZD',
+    'GBPUSD': 'GBPUSD',
+    'GOLD': 'XAUUSD',
+    'NASDAQ': 'NASDAQ',
+    'NZDCAD': 'NZDCAD',
+    'NZDCHF': 'NZDCHF',
+    'NZDJPY': 'NZDJPY',
+    'NZDUSD': 'NZDUSD',
+    'US30': 'NASDAQ',
+    'USDCAD': 'USDCAD',
+    'USDCHF': 'USDCHF',
+    'USDJPY': 'USDJPY',
+    'XAGUSD': 'XAGUSD',
+    'XAU.USD': 'XAUUSD',
+    'XAUUSD': 'XAUUSD'
 }
 
 export function extractCurrency(message) {
@@ -92,7 +92,6 @@ export function cleanMessage(message) {
 }
 
 
-
 export function extractProfit(message) {
     const tpPattern = /TP (\d+\.?\d*)/g; // Matches "TP" followed by a space and then a number
     let matches;
@@ -141,7 +140,11 @@ export function extractCommand(message) {
         return "BUY";
     }
 
-    throw new Error("No trading command found");
+    let error = new Error("No trading command found");
+
+    logger.error(error)
+
+    throw error;
 }
 
 export function extractTradeValue(message) {
@@ -192,7 +195,7 @@ export function extractTradeValue(message) {
     throw error;
 }
 
-export function extractActions(message){
+export function extractActions(message) {
     const cleanedMessage = cleanMessage(message)
 
     logger.info(`Cleaned: ${message}`)
