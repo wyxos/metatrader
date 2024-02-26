@@ -25,6 +25,7 @@ export async function onMessage(msg) {
 
                 if(isWithinRange(action.entry, currentPrice)){
                     try {
+                        action.entry = currentPrice
                         const data = await sendTradeCommand(action);
                         logger.info(`Trade command sent successfully. ${data}`)
                     } catch (error) {
