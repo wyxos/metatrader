@@ -1,5 +1,6 @@
 import axios from "axios";
 import logger from "./logger.mjs";
+import 'dotenv/config'
 
 export async function getCurrentMarketPrice(symbol, actionType) {
     const metaApiToken = process.env.META_API_TOKEN;
@@ -16,8 +17,7 @@ export async function getCurrentMarketPrice(symbol, actionType) {
     try {
         const response = await axios.get(url, config);
         // Assuming a buy action uses the 'ask' price and a sell action uses the 'bid' price
-        const marketPrice = actionType === 'ORDER_TYPE_BUY' ? response.data.ask : response.data.bid;
-        return marketPrice;
+        return actionType === 'ORDER_TYPE_BUY' ? response.data.ask : response.data.bid;
     } catch (error) {
         logger.error('Error fetching current market price:', error);
         return null; // or handle the error appropriately
