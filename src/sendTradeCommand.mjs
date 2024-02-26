@@ -17,7 +17,7 @@ export async function sendTradeCommand(tradeParams) {
     const data = {
         actionType: `ORDER_TYPE_${tradeParams.actionType}`,
         symbol: tradeParams.symbol,
-        volume: 0.1,
+        volume: 0.01,
         stopLoss: tradeParams.stopLoss,
         takeProfit: tradeParams.takeProfit,
         stopLossUnits: null,
