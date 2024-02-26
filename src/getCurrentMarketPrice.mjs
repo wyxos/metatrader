@@ -1,11 +1,12 @@
 import axios from "axios";
 import logger from "./logger.mjs";
-import 'dotenv/config'
 
 export async function getCurrentMarketPrice(symbol, actionType) {
     const metaApiToken = process.env.META_API_TOKEN;
     const accountId = process.env.ACCOUNT_ID;
     const url = process.env.META_URL + `/users/current/accounts/${accountId}/symbols/${symbol}/current-price`;
+
+    logger.info('fetching price from ' + url)
 
     const config = {
         headers: {
