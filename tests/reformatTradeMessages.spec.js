@@ -163,6 +163,19 @@ describe('reformatTradeMessages', () => {
         expect(formatted).toEqual('GOLD SELL 2028-2031 TP 2020.00 TP 2015.00 SL 2035.00')
     })
 
+    it('should clean message', () => {
+        const message = `Sell Gold @2030.2-2034.2
+
+        Sl :2036.2
+
+        Tp1 :2028.7
+        Tp2 :2026`
+
+        const formatted = cleanMessage(message)
+
+        expect(formatted).toEqual('SELL GOLD 2030.2-2034.2 SL 2036.2 TP 2028.7 TP 2026')
+    })
+
     it('should extract take profit', () => {
         const message = 'XAUUSD SELL 2030.60 2033.00 TP 2028.00 TP 2025.00 TP 2020.00 SL 2035.00'
 
@@ -181,6 +194,14 @@ describe('reformatTradeMessages', () => {
 
     it('should extract currency', () => {
         const message = 'XAUUSD SELL 2030.60 2033.00 TP 2028.00 TP 2025.00 TP 2020.00 SL 2035.00'
+
+        const currency = extractCurrency(message)
+
+        expect(currency).toEqual('XAUUSD')
+    });
+
+    it('should extract currency', () => {
+        const message = 'SELL GOLD 2030.2-2034.2 SL 2036.2 TP 2028.7 TP 2026'
 
         const currency = extractCurrency(message)
 
