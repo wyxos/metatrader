@@ -6,7 +6,7 @@ export async function sendTradeCommand(tradeParams) {
     const accountId = process.env.ACCOUNT_ID;
     const url = process.env.META_URL + `/users/current/accounts/${accountId}/trade`;
 
-    logger.info(`connecting to ${url} to send ${tradeParams}`)
+    logger.info(`connecting to ${url} to send ${JSON.stringify(tradeParams)}`)
 
     const config = {
         headers: {
