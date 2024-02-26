@@ -132,9 +132,9 @@ export function extractCommand(message) {
 
     // Determine command based on what was found
     if (hasSell && hasNow) {
-        return "SELL NOW";
+        return "SELL";
     } else if (hasBuy && hasNow) {
-        return "BUY NOW";
+        return "BUY";
     } else if (hasSell) {
         return "SELL";
     } else if (hasBuy) {
