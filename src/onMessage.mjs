@@ -18,7 +18,11 @@ export async function onMessage(msg) {
         for (const action of tradeActions) {
             const currentPrice = await getCurrentMarketPrice(action.symbol, action.actionType);
 
+            logger.info('Current price: ' + currentPrice)
+
             if(Array.isArray(action.entry)){
+                logger.info(`Trade is range, evaluating range min ${action.entry[0]} and max ${action.entry[1]}`)
+
                 if(isWithinRange(action.entry, currentPrice)){
                     try {
                         const data = await sendTradeCommand(action);
@@ -32,7 +36,10 @@ export async function onMessage(msg) {
                 }
             }
             else{
+                logger.info('Trade is single value')
+
                 if(!action.entry){
+                    logger.info('Trade entry not defined, using current price.')
                     action.entry = currentPrice
                 }
 
