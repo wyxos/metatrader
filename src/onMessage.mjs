@@ -32,7 +32,7 @@ export async function onMessage(msg) {
                         logger.error(`Error sending trade command: ${error}`)
                     }
                 } else {
-                    let error = `${new Date().getTime()} - Entry value is not within the specified range. Trade not executed.`;
+                    let error = `Entry value is not within the specified range. Trade not executed.`;
                     logger.error(error);
                 }
             }
