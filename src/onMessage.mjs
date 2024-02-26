@@ -27,7 +27,7 @@ export async function onMessage(msg) {
                     try {
                         action.entry = currentPrice
                         const data = await sendTradeCommand(action);
-                        logger.info(`Trade command sent successfully. ${data}`)
+                        logger.info(`Trade command sent successfully.`)
                     } catch (error) {
                         logger.error(`Error sending trade command: ${error}`)
                     }
@@ -46,7 +46,7 @@ export async function onMessage(msg) {
 
                 try {
                     const data = await sendTradeCommand(action);
-                    logger.info(`Trade command sent successfully. ${data}`)
+                    logger.info(`Trade command sent successfully.`)
                 } catch (error) {
                     logger.error(`Error sending trade command: ${error}`)
                 }

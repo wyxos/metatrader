@@ -1,9 +1,12 @@
 import axios from "axios";
+import logger from "./logger.mjs";
 
 export async function sendTradeCommand(tradeParams) {
     const metaApiToken = process.env.META_API_TOKEN;
     const accountId = process.env.ACCOUNT_ID;
     const url = process.env.META_URL + `/users/current/accounts/${accountId}/trade`;
+
+    logger.info(`connecting to ${url} to send ${tradeParams}`)
 
     const config = {
         headers: {
