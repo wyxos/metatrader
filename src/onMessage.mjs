@@ -6,7 +6,7 @@ import logger from "./logger.mjs";
 
 export async function onMessage(msg) {
     if (msg.text) {
-        logger.info('Original message ' + msg.text)
+        logger.info(`Original message ${msg.text}`)
         // Generate an array of reformatted trade messages
         const tradeActions = reformatTradeMessages(msg.text);
 

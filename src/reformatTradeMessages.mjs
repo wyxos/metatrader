@@ -195,12 +195,12 @@ export function extractTradeValue(message) {
 export function extractActions(message){
     const cleanedMessage = cleanMessage(message)
 
-    const symbol = extractCurrency(cleanedMessage)
+    logger.info(`Cleaned: ${message}`)
 
+    const symbol = extractCurrency(cleanedMessage)
     const actionType = extractCommand(cleanedMessage);
     const profits = extractProfit(cleanedMessage); // Assuming this returns an array of TP values
     const stopLoss = extractLoss(cleanedMessage);
-
     const entry = extractTradeValue(cleanedMessage)
 
     return profits.map(takeProfit => ({

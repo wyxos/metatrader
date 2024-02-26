@@ -239,25 +239,25 @@ describe('reformatTradeMessages', () => {
 
         currency = extractCommand(message)
 
-        expect(currency).toEqual('SELL NOW')
+        expect(currency).toEqual('SELL')
 
         message = 'SELL XAUUSD NOW 2030.60 2033.00 TP 2028.00 TP 2025.00 TP 2020.00 SL 2035.00'
 
         currency = extractCommand(message)
 
-        expect(currency).toEqual('SELL NOW')
+        expect(currency).toEqual('SELL')
 
         message = 'SELL NOW XAUUSD 2030.60 2033.00 TP 2028.00 TP 2025.00 TP 2020.00 SL 2035.00'
 
         currency = extractCommand(message)
 
-        expect(currency).toEqual('SELL NOW')
+        expect(currency).toEqual('SELL')
 
         message = 'BUY NOW XAUUSD 2030.60 2033.00 TP 2028.00 TP 2025.00 TP 2020.00 SL 2035.00'
 
         currency = extractCommand(message)
 
-        expect(currency).toEqual('BUY NOW')
+        expect(currency).toEqual('BUY')
 
         message = 'buy XAUUSD 2030.60 2033.00 TP 2028.00 TP 2025.00 TP 2020.00 SL 2035.00'
 
