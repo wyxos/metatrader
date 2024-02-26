@@ -198,7 +198,7 @@ export function extractTradeValue(message) {
 export function extractActions(message) {
     const cleanedMessage = cleanMessage(message)
 
-    logger.info(`Cleaned: ${message}`)
+    logger.info(`Cleaned: ${cleanedMessage}`)
 
     const symbol = extractCurrency(cleanedMessage)
     const actionType = extractCommand(cleanedMessage);
