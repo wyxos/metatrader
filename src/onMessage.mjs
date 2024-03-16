@@ -5,6 +5,15 @@ import {sendTradeCommand} from "./sendTradeCommand.mjs";
 import logger from "./logger.mjs";
 
 export async function onMessage(msg) {
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+
+    // Check if the current day is Saturday (6) or Sunday (0)
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+        logger.info('It is the weekend. No trade actions will be processed.');
+        return; // Exit the function early
+    }
+
     if (msg.text) {
         logger.info(`Original message ${msg.text}`)
         // Generate an array of reformatted trade messages
