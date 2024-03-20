@@ -5,6 +5,12 @@ import {sendTradeCommand} from "./sendTradeCommand.mjs";
 import calculateATR from "./calculateATR.mjs";
 import logger from "./logger.mjs";
 
+function differenceLog(currentPrice, action){
+    logger.info(`TP difference: ${currentPrice - action.takeProfit}`)
+
+    logger.info(`SL difference: ${currentPrice - action.stopLoss}`)
+}
+
 export async function onMessage(msg) {
     const today = new Date();
     const dayOfWeek = today.getDay();
@@ -50,7 +56,10 @@ export async function onMessage(msg) {
                     try {
                         action.entry = currentPrice
                         const data = await sendTradeCommand(action);
+
                         logger.info(`Trade command sent successfully.`)
+
+                        differenceLog(currentPrice, action)
                     } catch (error) {
                         logger.error(`Error sending trade command: ${error}`)
                     }
@@ -69,7 +78,10 @@ export async function onMessage(msg) {
 
                 try {
                     const data = await sendTradeCommand(action);
+
                     logger.info(`Trade command sent successfully.`)
+
+                    differenceLog(currentPrice, action)
                 } catch (error) {
                     logger.error(`Error sending trade command: ${error}`)
                 }
