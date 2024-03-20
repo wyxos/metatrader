@@ -2,6 +2,7 @@ import reformatTradeMessages, {cleanMessage} from "./reformatTradeMessages.mjs";
 import {getCurrentMarketPrice} from "./getCurrentMarketPrice.mjs";
 import {isWithinRange} from "./isWithinRange.mjs";
 import {sendTradeCommand} from "./sendTradeCommand.mjs";
+import calculateATR from "./calculateATR.mjs";
 import logger from "./logger.mjs";
 
 export async function onMessage(msg) {
@@ -11,23 +12,36 @@ export async function onMessage(msg) {
     // Check if the current day is Saturday (6) or Sunday (0)
     if (dayOfWeek === 0 || dayOfWeek === 6) {
         logger.info('It is the weekend. No trade actions will be processed.');
-        return; // Exit the function early
+
+        return;
     }
 
     if (msg.text) {
         logger.info(`Original message ${msg.text}`)
-        // Generate an array of reformatted trade messages
+
         const tradeActions = reformatTradeMessages(msg.text);
 
         if(!tradeActions.length){
             logger.error('No trade action found.')
         }
 
-        // Process each trade message individually
         for (const action of tradeActions) {
             const currentPrice = await getCurrentMarketPrice(action.symbol, action.actionType);
 
             logger.info('Current price: ' + currentPrice)
+
+            const atr = await calculateATR(action.symbol);
+
+            logger.info(`Calculated atr: ${JSON.stringify(atr)}`)
+
+            const atrMultiplier = 1; // Define your ATR multiplier here
+            const trailingStopDistance = atr * atrMultiplier;
+
+            if (action.actionType.toUpperCase() === 'BUY') {
+                action.trailingStopLoss = currentPrice - trailingStopDistance;
+            } else if (action.actionType.toUpperCase() === 'SELL') {
+                action.trailingStopLoss = currentPrice + trailingStopDistance;
+            }
 
             if(Array.isArray(action.entry)){
                 logger.info(`Trade is range, evaluating range min ${action.entry[0]} and max ${action.entry[1]}`)

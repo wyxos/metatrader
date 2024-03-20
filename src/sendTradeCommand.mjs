@@ -19,18 +19,16 @@ export async function sendTradeCommand(tradeParams) {
         symbol: tradeParams.symbol,
         volume: 0.01,
         stopLoss: tradeParams.stopLoss,
-        takeProfit: tradeParams.takeProfit,
+        // takeProfit: tradeParams.takeProfit,
         stopLossUnits: null,
         takeProfitUnits: null,
-        trailingStopLoss: null,
+        trailingStopLoss: tradeParams.trailingStopLoss,
         comment: null,
         clientId: null,
         magic: null,
         slippage: null,
         fillingModes: null,
     };
-
-    console.log('payload', data)
 
     logger.info(`connecting to ${url} to send ${JSON.stringify(data)}`)
 

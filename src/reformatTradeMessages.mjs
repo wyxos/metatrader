@@ -8,6 +8,7 @@ const currencies = {
     'AUDUSD': 'AUDUSD',
     'BTC.USD': 'BTC.USD',
     'BTCUSD': 'BTCUSD',
+    'CADCHF': 'CADCHF',
     'CHFEUR': 'CHFEUR',
     'Chfjpy': 'Chfjpy',
     'DXY': 'DXY',
