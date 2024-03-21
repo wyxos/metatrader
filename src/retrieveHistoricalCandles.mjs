@@ -1,4 +1,5 @@
 import axios from 'axios';
+import logger from "./logger.mjs";
 
 export default async function retrieveHistoricalCandles(symbol, timeframe, startTime = null, limit = 10) {
     const metaApiToken = process.env.META_API_TOKEN;
@@ -22,7 +23,7 @@ export default async function retrieveHistoricalCandles(symbol, timeframe, start
         const response = await axios.get(url, config);
         return response.data; // Assuming the API responds with an array of candle data
     } catch (error) {
-        console.error('Error retrieving historical candles:', error);
+        logger.error('Error retrieving historical candles:', error);
         throw error;
     }
 }
