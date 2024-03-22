@@ -7,6 +7,8 @@ export default async function retrieveHistoricalCandles(symbol, timeframe, start
 
     const url = `${process.env.META_MARKET_URL}/users/current/accounts/${accountId}/historical-market-data/symbols/${symbol}/timeframes/${timeframe}/candles`;
 
+    logger.info(`Fetching historical candles from ${url}`)
+
     const config = {
         headers: {
             'Content-Type': 'application/json',
