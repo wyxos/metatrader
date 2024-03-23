@@ -18,9 +18,10 @@ if (!fs.existsSync(logDirectory)) {
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.combine(
-        winston.format.colorize({ all: false, colors: { error: 'red' }}), // Colorize errors red
         winston.format.timestamp(),
-        winston.format.printf(info => `${info.timestamp} - ${info.level.toUpperCase()}: ${info.message}`)
+        winston.format.printf((info) => {
+            return `${info.timestamp} - ${info.level.toUpperCase()}: ${info.message}`;
+        })
     ),
     transports: [
         new winston.transports.DailyRotateFile({
@@ -29,9 +30,7 @@ const logger = winston.createLogger({
             maxSize: '20m',
             maxFiles: '14d'
         }),
-        new winston.transports.Console({
-            format: winston.format.simple(),
-        }),
+        new winston.transports.Console(),
     ],
 });
 
