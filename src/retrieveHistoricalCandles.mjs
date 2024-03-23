@@ -11,7 +11,6 @@ export default async function retrieveHistoricalCandles(symbol, timeframe, start
 
     const config = {
         headers: {
-            'Content-Type': 'application/json',
             'Accept': 'application/json',
             'auth-token': metaApiToken
         },
