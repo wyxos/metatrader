@@ -1,7 +1,6 @@
 import logger from "./logger.mjs";
 
 const currencies = {
-    'NASDAQ': 'NASDAQ',
     'AUDCAD': 'AUDCAD',
     'AUDCHF': 'AUDCHF',
     'AUDJPY': 'AUDJPY',
