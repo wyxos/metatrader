@@ -36,23 +36,37 @@ export async function onMessage(msg) {
 
             logger.info('Current price: ' + currentPrice)
 
-            try{
-                const atr = await calculateATR(action.symbol);
+            const profitThreshold = 100; // Define profit threshold here
+            const trailingStopPoints = 50; // Define trailing stop points here
 
-                logger.info(`Calculated atr: ${JSON.stringify(atr)}`)
+            const shouldTrailStop = (action.actionType.toUpperCase() === 'BUY' && currentPrice - action.entry >= profitThreshold) ||
+                (action.actionType.toUpperCase() === 'SELL' && action.entry - currentPrice >= profitThreshold);
 
-                const atrMultiplier = 1; // Define your ATR multiplier here
-                const trailingStopDistance = atr * atrMultiplier;
-
+            if (shouldTrailStop) {
                 if (action.actionType.toUpperCase() === 'BUY') {
-                    action.trailingStopLoss = currentPrice - trailingStopDistance;
-                } else if (action.actionType.toUpperCase() === 'SELL') {
-                    action.trailingStopLoss = currentPrice + trailingStopDistance;
+                    action.trailingStopLoss = currentPrice - trailingStopPoints;
+                } else {
+                    action.trailingStopLoss = currentPrice + trailingStopPoints;
                 }
             }
-            catch (error){
-                logger.error('Failed to calculate ATR, proceeding without trailing stop loss.')
-            }
+
+            // try{
+            //     const atr = await calculateATR(action.symbol);
+            //
+            //     logger.info(`Calculated atr: ${JSON.stringify(atr)}`)
+            //
+            //     const atrMultiplier = 1; // Define your ATR multiplier here
+            //     const trailingStopDistance = atr * atrMultiplier;
+            //
+            //     if (action.actionType.toUpperCase() === 'BUY') {
+            //         action.trailingStopLoss = currentPrice - trailingStopDistance;
+            //     } else if (action.actionType.toUpperCase() === 'SELL') {
+            //         action.trailingStopLoss = currentPrice + trailingStopDistance;
+            //     }
+            // }
+            // catch (error){
+            //     logger.error('Failed to calculate ATR, proceeding without trailing stop loss.')
+            // }
 
             if(Array.isArray(action.entry)){
                 logger.info(`Trade is range, evaluating range min ${action.entry[0]} and max ${action.entry[1]}`)
