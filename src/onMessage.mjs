@@ -1,4 +1,4 @@
-import reformatTradeMessages, {cleanMessage} from "./reformatTradeMessages.mjs";
+import reformatTradeMessages from "./reformatTradeMessages.mjs";
 import {getCurrentMarketPrice} from "./getCurrentMarketPrice.mjs";
 import {isWithinRange} from "./isWithinRange.mjs";
 import {sendTradeCommand} from "./sendTradeCommand.mjs";
@@ -36,17 +36,22 @@ export async function onMessage(msg) {
 
             logger.info('Current price: ' + currentPrice)
 
-            const atr = await calculateATR(action.symbol);
+            try{
+                const atr = await calculateATR(action.symbol);
 
-            logger.info(`Calculated atr: ${JSON.stringify(atr)}`)
+                logger.info(`Calculated atr: ${JSON.stringify(atr)}`)
 
-            const atrMultiplier = 1; // Define your ATR multiplier here
-            const trailingStopDistance = atr * atrMultiplier;
+                const atrMultiplier = 1; // Define your ATR multiplier here
+                const trailingStopDistance = atr * atrMultiplier;
 
-            if (action.actionType.toUpperCase() === 'BUY') {
-                action.trailingStopLoss = currentPrice - trailingStopDistance;
-            } else if (action.actionType.toUpperCase() === 'SELL') {
-                action.trailingStopLoss = currentPrice + trailingStopDistance;
+                if (action.actionType.toUpperCase() === 'BUY') {
+                    action.trailingStopLoss = currentPrice - trailingStopDistance;
+                } else if (action.actionType.toUpperCase() === 'SELL') {
+                    action.trailingStopLoss = currentPrice + trailingStopDistance;
+                }
+            }
+            catch (error){
+                logger.error('Failed to calculate ATR, proceeding without trailing loss stop.')
             }
 
             if(Array.isArray(action.entry)){
