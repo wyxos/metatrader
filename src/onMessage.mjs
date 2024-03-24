@@ -51,7 +51,7 @@ export async function onMessage(msg) {
                 }
             }
             catch (error){
-                logger.error('Failed to calculate ATR, proceeding without trailing loss stop.')
+                logger.error('Failed to calculate ATR, proceeding without trailing stop loss.')
             }
 
             if(Array.isArray(action.entry)){
