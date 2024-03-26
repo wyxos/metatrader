@@ -36,19 +36,19 @@ export async function onMessage(msg) {
 
             logger.info('Current price: ' + currentPrice)
 
-            const profitThreshold = 100; // Define profit threshold here
-            const trailingStopPoints = 50; // Define trailing stop points here
-
-            const shouldTrailStop = (action.actionType.toUpperCase() === 'BUY' && currentPrice - action.entry >= profitThreshold) ||
-                (action.actionType.toUpperCase() === 'SELL' && action.entry - currentPrice >= profitThreshold);
-
-            if (shouldTrailStop) {
-                if (action.actionType.toUpperCase() === 'BUY') {
-                    action.trailingStopLoss = currentPrice - trailingStopPoints;
-                } else {
-                    action.trailingStopLoss = currentPrice + trailingStopPoints;
-                }
-            }
+            // const profitThreshold = 100; // Define profit threshold here
+            // const trailingStopPoints = 50; // Define trailing stop points here
+            //
+            // const shouldTrailStop = (action.actionType.toUpperCase() === 'BUY' && currentPrice - action.entry >= profitThreshold) ||
+            //     (action.actionType.toUpperCase() === 'SELL' && action.entry - currentPrice >= profitThreshold);
+            //
+            // if (shouldTrailStop) {
+            //     if (action.actionType.toUpperCase() === 'BUY') {
+            //         action.trailingStopLoss = currentPrice - trailingStopPoints;
+            //     } else {
+            //         action.trailingStopLoss = currentPrice + trailingStopPoints;
+            //     }
+            // }
 
             // try{
             //     const atr = await calculateATR(action.symbol);
