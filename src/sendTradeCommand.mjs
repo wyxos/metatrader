@@ -19,10 +19,25 @@ export async function sendTradeCommand(tradeParams) {
         symbol: tradeParams.symbol,
         volume: 0.01,
         stopLoss: tradeParams.stopLoss,
-        // takeProfit: tradeParams.takeProfit,
+        takeProfit: tradeParams.takeProfit,
         stopLossUnits: null,
         takeProfitUnits: null,
-        trailingStopLoss: tradeParams.trailingStopLoss,
+        // trailingStopLoss: {
+        //     "distance": {
+        //         "distance": 0.1,
+        //         "units": "RELATIVE_PRICE"
+        //     },
+        //     "threshold": {
+        //         "thresholds": [
+        //             {
+        //                 "threshold": 1.3,
+        //                 "stopLoss": tradeParams.trailingStopLoss
+        //             }
+        //         ],
+        //         "units": "ABSOLUTE_PRICE",
+        //         "stopPriceBase": "CURRENT_PRICE"
+        //     }
+        // },
         comment: null,
         clientId: null,
         magic: null,
