@@ -42,7 +42,20 @@ const currencies = {
     'USDJPY': 'USDJPY',
     'XAGUSD': 'XAGUSD',
     'XAU.USD': 'XAUUSD',
-    'XAUUSD': 'XAUUSD'
+    'XAUUSD': 'XAUUSD',
+    'USOIL': 'USOIL',
+    'XAU/USD': 'XAUUSD'
+}
+
+function getCurrency(message){
+    // Attempt to match the beginning of the message with any currency key
+    for (const currencyKey in currencies) {
+        if (message.includes(currencyKey)) {
+            return currencyKey;
+        }
+    }
+
+    return null
 }
 
 export function extractCurrency(message) {
@@ -156,7 +169,7 @@ export function extractCommand(message) {
 
 export function extractTradeValue(message) {
     // Use previously defined functions to extract and remove known parts of the message
-    const symbol = extractCurrency(message);
+    const symbol = getCurrency(message);
     const command = extractCommand(message);
     const profits = extractProfit(message); // Assuming this returns an array of TP values
     const loss = extractLoss(message);
